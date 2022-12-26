@@ -2,3 +2,8 @@
 * text=auto
 Assets/StarterAssets/ThirdPersonController/Character/Models/*.fbx filter=lfs diff=lfs merge=lfs -text
 Assets/StarterAssets/ThirdPersonController/Character/Textures/*.png filter=lfs diff=lfs merge=lfs -text
+Assets/CartoonLader/CartoonLadder.fbx filter=lfs diff=lfs merge=lfs -text
+Assets/kawetofe_Assets/medievalTentSmall/textures/*.png filter=lfs diff=lfs merge=lfs -text
+Assets/Polytope[[:space:]]Studio/Lowpoly[[:space:]]Medieval[[:space:]]Demos/Environment_Free/Terrain/New_Terrain.asset filter=lfs diff=lfs merge=lfs -text
+Assets/Polytope[[:space:]]Studio/Lowpoly[[:space:]]Medieval[[:space:]]Environments/Sources/Textures/*.png filter=lfs diff=lfs merge=lfs -text
+
