@@ -13,6 +13,8 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 
+		public bool climb;
+
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
@@ -43,6 +45,12 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
+
+		public void OnClimb(InputValue value)
+		{
+			ClimbInput(value.isPressed);
+		}
+
 #endif
 
 
@@ -64,6 +72,11 @@ namespace StarterAssets
 		public void SprintInput(bool newSprintState)
 		{
 			sprint = newSprintState;
+		}
+
+		public void ClimbInput(bool newClimbState)
+		{
+			climb = newClimbState;
 		}
 
 		private void OnApplicationFocus(bool hasFocus)
