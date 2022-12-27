@@ -9,13 +9,13 @@ public class movingplane : MonoBehaviour
     private float speed = 10.0f;
     private Vector3 startPos;
     private Vector3 initPos;
-    public bool stasis;
+    public static bool stasis;
     // Start is called before the first frame update
     void Start()
     {
         startPos = transform.position;
         initPos = startPos;
-        //stasis = false;
+        stasis = false;
     }
 
     // Update is called once per frame
