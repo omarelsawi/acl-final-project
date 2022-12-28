@@ -6,15 +6,22 @@ public class extras_link : MonoBehaviour
 {
     private int ablities; //1 = remote bombs, 2=Cryonis, 4=stasis
     public Transform player; //intialize as link
-    public Transform player_hand; //intialize as hand position
+    public Transform player_front; //intialize as link
     public GameObject iceCube;
     public GameObject waterplane;
     private bool bombInstantiated;
     public GameObject bomb;
+    public GameObject bombprefab;
+    public Animator anim;
+    private Vector3 bomb_starting;
+    static public bool wantsToDetonate;
+
     void Start()
     {
         ablities = 1;
         bombInstantiated = false;
+        anim = GetComponent<Animator>();
+        wantsToDetonate = false;
     }
 
     // Update is called once per frame
@@ -68,14 +75,11 @@ public class extras_link : MonoBehaviour
 
         }
 
-        if (bombInstantiated) {
-            bomb.transform.position = player_hand.transform.position;
-        }
 
 
 
 
-        if (player.transform.position.y < -50) { 
+        if (player.position.y < -50) { 
         //end game
         //load main menu
         }
@@ -89,15 +93,21 @@ public class extras_link : MonoBehaviour
         if (x == 1)
         {
             if (!bombInstantiated) {
+                wantsToDetonate = false;
                 bomb.SetActive(true);
-                //throw bomb
-
-
                 bombInstantiated = true;
+                anim.Play("Throwing Bomb");
+                StartCoroutine(StartTimer());
+
+
             }
             else
             {
-                //detonate instnatiated bomb
+                //play explosion animation
+
+                wantsToDetonate = true;
+
+                bombInstantiated=false;
 
             }
         }
@@ -126,5 +136,17 @@ public class extras_link : MonoBehaviour
         {
             movingplane.stasis = true;
         }
+    }
+
+    IEnumerator StartTimer()
+    {
+        yield return new WaitForSeconds(0.80F);
+        //yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        bomb.SetActive(false);
+        bomb_starting = player_front.position;
+        GameObject bomb_projectile = Instantiate(bombprefab, bomb_starting, Quaternion.identity);
+        bomb_projectile.GetComponent<Rigidbody>().AddForce(player.forward *10, ForceMode.Impulse);
+
+
     }
 }
