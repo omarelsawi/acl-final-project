@@ -15,6 +15,9 @@ public class extras_link : MonoBehaviour
     public Animator anim;
     private Vector3 bomb_starting;
     static public bool wantsToDetonate;
+    public GameObject bombeffect;
+    public GameObject bombeffect2;
+    GameObject bomb_projectile;
 
     void Start()
     {
@@ -104,10 +107,10 @@ public class extras_link : MonoBehaviour
             else
             {
                 //play explosion animation
-
-                wantsToDetonate = true;
-
-                bombInstantiated=false;
+                bombeffect.transform.position = bomb_projectile.transform.position;
+                bombeffect2.transform.position = bomb_projectile.transform.position;
+                bombeffect.SetActive(true);
+                StartCoroutine(StartTimer1());
 
             }
         }
@@ -138,13 +141,35 @@ public class extras_link : MonoBehaviour
         }
     }
 
+
+    IEnumerator StartTimer1()
+    {
+        wantsToDetonate = true;
+        bombInstantiated = false;
+        yield return new WaitForSeconds(2.80F);
+        //yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        bombeffect.SetActive(false);
+        bombeffect2.SetActive(true);
+        StartCoroutine(StartTimer2());
+
+    }
+
+
+    IEnumerator StartTimer2()
+    {
+        yield return new WaitForSeconds(2.80F);
+        //yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        bombeffect2.SetActive(false);
+
+    }
+
     IEnumerator StartTimer()
     {
         yield return new WaitForSeconds(0.80F);
         //yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
         bomb.SetActive(false);
         bomb_starting = player_front.position;
-        GameObject bomb_projectile = Instantiate(bombprefab, bomb_starting, Quaternion.identity);
+        bomb_projectile = Instantiate(bombprefab, bomb_starting, Quaternion.identity);
         bomb_projectile.GetComponent<Rigidbody>().AddForce(player.forward *10, ForceMode.Impulse);
 
 
