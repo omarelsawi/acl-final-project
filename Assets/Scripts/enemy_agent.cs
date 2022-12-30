@@ -12,9 +12,14 @@ public class enemy_agent : MonoBehaviour
     private bool attack;
     public float chaseArea;
     public float attackArea;
+    public float attackFrequency;
     Animator animator;
     bool gotAttacked;
     bool alert;
+    int maxHealth = 20;
+    int currentHealth;
+    float attackTimer = 0f;
+    bool dead;
     private void Awake()
     {
         Random.InitState(System.DateTime.Now.Millisecond);
@@ -24,24 +29,46 @@ public class enemy_agent : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-
+        if (gameObject.CompareTag("Moblin")) maxHealth = 30;
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckDistance();
-        if (chase)
-        {
-            Chase();
-        }
+        attackTimer = Time.deltaTime * Time.timeScale;
+        if (!dead && currentHealth <= 0)
+            Die();
 
-        else if (attack)
+        if (!dead)
         {
-            Attack();
+            CheckDistance();
+            if (chase)
+            {
+                Chase();
+            }
+
+            else if (attack && attackTimer >= attackFrequency)
+            {
+                Attack();
+            }
+
         }
     }
 
+    public void TakeDamage(int x)
+    {
+        currentHealth = currentHealth - x > 0 ? currentHealth - x : 0;
+        Debug.Log(gameObject.name + "'s Health: " + currentHealth);
+    }
+    void Die()
+    {
+        animator.SetTrigger("Die");
+        dead = true;
+        SetComponentsEnabled(false);
+        StartCoroutine(Destroy());
+
+    }
     void Attack()
     {
         int attackType = Random.Range(0, 3);
@@ -55,7 +82,7 @@ public class enemy_agent : MonoBehaviour
         {
             animator.SetTrigger("Attack Horizontally");
         }
-
+        attackTimer = 0f;
     }
     void Chase()
     {
@@ -81,4 +108,16 @@ public class enemy_agent : MonoBehaviour
         }
 
     }
+
+    void SetComponentsEnabled(bool x)
+    {
+        navMeshAgent.enabled = x;
+        this.GetComponent<BoxCollider>().enabled = x;
+    }
+    IEnumerator Destroy()
+    {
+        yield return new WaitForSeconds(10f);
+        Destroy(gameObject);
+    }
+
 }
