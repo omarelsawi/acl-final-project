@@ -82,6 +82,7 @@ public class extras_link : MonoBehaviour
 
 
 
+
         if (player.position.y < -50) { 
         //end game
         //load main menu
