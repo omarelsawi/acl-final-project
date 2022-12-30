@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.024320278, g: 0.0650905, b: 0.09081077, a: 0.1}
+  m_IndirectSpecularColor: {r: 0.024317957, g: 0.06506007, b: 0.090756595, a: 0.1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12553,6 +12553,7 @@ MonoBehaviour:
   look: {x: 0, y: 0}
   jump: 0
   sprint: 0
+  climb: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -16608,10 +16609,10 @@ Animator:
   m_GameObject: {fileID: 3133877357234053800}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b992445118595df4ab42586f1ca43cf4, type: 3}
-  m_Controller: {fileID: 9100000, guid: 40db3173a05ae3242b1c182a09b0a183, type: 2}
-  m_CullingMode: 0
+  m_Controller: {fileID: 9100000, guid: 5433501ac442417419ff6e8ac3a356c7, type: 2}
+  m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
