@@ -9,7 +9,10 @@ public class link_main : MonoBehaviour
     public float attackRange = 0.35f;
     public LayerMask enemyLayer;
     public bool invincible;
-    
+    public GameObject arrow;
+    public GameObject bow;
+    public GameObject sword;
+    public GameObject shield;
     Animator animator;
     bool shielded;
     int maxHealth = 24;
@@ -28,11 +31,9 @@ public class link_main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!dead && currentHealth <= 0)
             Die();
-
-        else if (Input.GetKeyDown("j"))
-            WakeUp(); // for testing purposes
 
         if (Input.GetKeyDown("i"))
             invincible = !invincible;
@@ -79,12 +80,7 @@ public class link_main : MonoBehaviour
     {
         animator.SetTrigger("Die");
         dead = true;
-    }
-    void WakeUp()
-    {
-        currentHealth = maxHealth;
-        animator.SetTrigger("WakeUp");
-        dead = false;
+        SetComponentsEnabled(false);
     }
 
     void Heal(int x)
@@ -94,5 +90,11 @@ public class link_main : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(attackPoint.transform.position, attackRange);
+    }
+
+    void SetComponentsEnabled(bool x)
+    {
+        controller.enabled = x;
+
     }
 }
