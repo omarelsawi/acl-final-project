@@ -64,7 +64,7 @@ public class Boss : MonoBehaviour
     private float velocity = 0.0f;
     private bool timeFinish;
     private bool notFirstTime;
-    
+
 
     private void Awake()
     {
@@ -78,12 +78,12 @@ public class Boss : MonoBehaviour
         if (canAttack)
         {
             // Make the boss look toward the player
-            //transform.LookAt(player);
+            transform.LookAt(player);
         }
         else
         {
             // Make the boss look away from the player
-            //transform.LookAt(null);
+            transform.LookAt(null);
         }
         if (rock && towardBoss)
         {
@@ -100,7 +100,7 @@ public class Boss : MonoBehaviour
             }
         }
 
-        Debug.Log("health"+health);
+        Debug.Log("health" + health);
         if (health <= 0)
         {
             Dye();
@@ -111,7 +111,7 @@ public class Boss : MonoBehaviour
             flying();
         }
 
-        if (master &&  master.transform.position.y > 1 && onGround && health > 0 )
+        if (master && master.transform.position.y > 1 && onGround && health > 0)
         {
             falling();
         }
@@ -121,7 +121,7 @@ public class Boss : MonoBehaviour
             Invoke(nameof(onFloor), 0.5f);
         }
 
-        if (master &&  health <= 100 && !alreadyMoved && master.transform.position.y > 4.5 && canAttack && health > 0)
+        if (master && health <= 100 && !alreadyMoved && master.transform.position.y > 4.5 && canAttack && health > 0)
         {
             agent.transform.position = RandomNavmeshLocation(100f);
             alreadyMoved = true;
@@ -132,7 +132,7 @@ public class Boss : MonoBehaviour
         {
             master.GetComponent<CapsuleCollider>().center = new Vector3(0, 0, 0);
         }
-        if(notFirstTime == false)
+        if (notFirstTime == false)
             notFirstTime = true;
 
 
@@ -169,7 +169,7 @@ public class Boss : MonoBehaviour
         }
         else
         {
-            transform.forward = new Vector3(0,0,0);
+            transform.forward = new Vector3(0, 0, 0);
 
         }
     }
@@ -178,7 +178,7 @@ public class Boss : MonoBehaviour
 
     private void onFloor()
     {
-        //transform.LookAt(null);
+        transform.LookAt(null);
 
         onGround = true;
         animator.SetBool("hurtOnFlorr", true);
@@ -191,7 +191,7 @@ public class Boss : MonoBehaviour
 
     private void EndOnFloor()
     {
-        //transform.LookAt(player);
+        transform.LookAt(player);
 
         onGround = false;
         canAttack = true;
@@ -209,7 +209,7 @@ public class Boss : MonoBehaviour
         animator.SetBool("fall", true);
         canAttack = false;
         onGround = true;
-        while(master.transform.position.y > 0) //&& onGround
+        while (master.transform.position.y > 0) //&& onGround
             falling();
     }
 
@@ -235,7 +235,7 @@ public class Boss : MonoBehaviour
         // Make sure enemy doesn't move
         // agent.SetDestination(transform.position);
 
-        //transform.LookAt(player);
+        transform.LookAt(player);
 
         // Attack code here
         Vector3 position = new Vector3(master.transform.position.x, master.transform.position.y + 10, master.transform.position.z);
@@ -252,7 +252,7 @@ public class Boss : MonoBehaviour
             yield return null;
         }
         if (rock)
-                {
+        {
             rock.transform.SetParent(null);
             staticRock = false;
             if (towardBoss)
@@ -303,10 +303,11 @@ public class Boss : MonoBehaviour
     {
         waiting = false;
     }
-    
- 
-  
-    public void disapear() {
+
+
+
+    public void disapear()
+    {
         //Time.timeScale = 0;
         Destroy(master);
     }
@@ -326,7 +327,11 @@ public class Boss : MonoBehaviour
                 // If not, move the object downwar  d with the fall velocity
                 master.transform.position += Vector3.down * velocity;
                 if (master.transform.position.y < 4)
+                {
+                    //Sound When an enemy dies
+
                     animator.SetTrigger("die");
+                }
 
             }
             if (master.transform.position.y < 1.5)
@@ -355,7 +360,7 @@ public class Boss : MonoBehaviour
 
     public void decreaseHealth(int damage)
     {
-        if(health - damage >= 0)
+        if (health - damage >= 0)
             health -= damage;
         else
             health = 0;
@@ -365,6 +370,9 @@ public class Boss : MonoBehaviour
     }
     public void CollisionDetected(Collision collision)
     {
+
+        //Sound when hit
+
         //Debug.Log("in CollisionDetected");
         //Debug.Log("CompareTag" + collision.gameObject.CompareTag("rock"));
         //Debug.Log("damageRock" + damageRock);
@@ -373,8 +381,8 @@ public class Boss : MonoBehaviour
         {
             canAttack = false;
             Debug.Log("rock collision");
-            decreaseHealth(40);
-            if(health > 0)
+            decreaseHealth(200);
+            if (health > 0)
                 fall();
         }
         else if (collision.gameObject.CompareTag("sword") && !shield.activeInHierarchy)
