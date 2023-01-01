@@ -25,6 +25,10 @@ public class explosion : MonoBehaviour
             {
                 Destroy(other.gameObject);
             }
+            if (other.gameObject.CompareTag("Moblin") || other.gameObject.CompareTag("Bokoblin"))
+            {
+                other.gameObject.GetComponent<enemy_agent>().TakeDamage(10);
+            }
             //if (other.gameObject.CompareTag("Enemy"))
            // {
                 // Apply damage to the enemy and destroy the bomb.
