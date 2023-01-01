@@ -49,7 +49,6 @@ public class link_main : MonoBehaviour
             SwitchWeapons();
         if (autoLowerShield)
             shieldCoolDown -= Time.deltaTime;
-        Debug.Log(shieldCoolDown);
         if (shieldCoolDown <= 0.0f)
         {
             autoLowerShield = false;
