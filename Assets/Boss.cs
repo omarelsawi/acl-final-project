@@ -78,13 +78,9 @@ public class Boss : MonoBehaviour
         if (canAttack)
         {
             // Make the boss look toward the player
-            //transform.LookAt(player);
+            transform.LookAt(player);
         }
-        else
-        {
-            // Make the boss look away from the player
-            //transform.LookAt(null);
-        }
+       
         if (rock && towardBoss)
         {
             // Check if the master is currently flying
@@ -169,7 +165,7 @@ public class Boss : MonoBehaviour
         }
         else
         {
-            transform.forward = new Vector3(0,0,0);
+            transform.forward = new Vector3(0, 0, 0);
 
         }
     }
@@ -178,7 +174,7 @@ public class Boss : MonoBehaviour
 
     private void onFloor()
     {
-        //transform.LookAt(null);
+        transform.LookAt(null);
 
         onGround = true;
         animator.SetBool("hurtOnFlorr", true);
@@ -235,7 +231,7 @@ public class Boss : MonoBehaviour
         // Make sure enemy doesn't move
         // agent.SetDestination(transform.position);
 
-        //transform.LookAt(player);
+        transform.LookAt(player);
 
         // Attack code here
         Vector3 position = new Vector3(master.transform.position.x, master.transform.position.y + 10, master.transform.position.z);
@@ -326,7 +322,10 @@ public class Boss : MonoBehaviour
                 // If not, move the object downwar  d with the fall velocity
                 master.transform.position += Vector3.down * velocity;
                 if (master.transform.position.y < 4)
+                {
+                    ///Sound When an enemy dies
                     animator.SetTrigger("die");
+                }
 
             }
             if (master.transform.position.y < 1.5)
@@ -365,6 +364,9 @@ public class Boss : MonoBehaviour
     }
     public void CollisionDetected(Collision collision)
     {
+
+        //Sound when hit
+
         //Debug.Log("in CollisionDetected");
         //Debug.Log("CompareTag" + collision.gameObject.CompareTag("rock"));
         //Debug.Log("damageRock" + damageRock);
