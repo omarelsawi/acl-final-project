@@ -6150,7 +6150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458873301}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 100.1, y: 14.2, z: 72.6}
+  m_LocalPosition: {x: 33.2, y: 5.6, z: 72.6}
   m_LocalScale: {x: 131.59409, y: 6.68698, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13407,7 +13407,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1193493402}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 34, y: -8, z: 77.4}
+  m_LocalPosition: {x: 152.4, y: 12.8, z: 77.4}
   m_LocalScale: {x: 131.59409, y: 22.073061, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22973,7 +22973,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 274649b0e221539409070ebf6c18918b, type: 3}
   - {fileID: 8300000, guid: a3194b8bbc96ef84fab1f98f4b7dae3e, type: 3}
   FootstepAudioVolume: 0.3
-  JumpHeight: 1.2
+  JumpHeight: 5
   Gravity: -15
   JumpTimeout: 0.3
   FallTimeout: 0.15
