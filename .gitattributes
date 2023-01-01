@@ -17,3 +17,4 @@ Assets/Boss/**/*.fbx filter=lfs diff=lfs merge=lfs
 Assets/Boss/**/*.dae filter=lfs diff=lfs merge=lfs
 Assets/Boss/**/*.png filter=lfs diff=lfs merge=lfs
 Assets/Animations/**/*.fbx filter=lfs diff=lfs merge=lfs -text
+Assets/Walls[[:space:]]and[[:space:]]floors[[:space:]]v.1/Textures/Column_Textures/*.png filter=lfs diff=lfs merge=lfs -text

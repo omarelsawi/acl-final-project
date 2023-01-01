@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections;
+
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -99,13 +101,31 @@ namespace StarterAssets
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
 
-        private int _animIDClimb;
+        //Gliding and climbing booleans
+        public bool gliding;
+        public bool climbing;
+
+
+        //parachute
+        public GameObject parachute;
+        private GameObject initPara ;
+
+        //climbing positions
+            //ladder
+            private float lad_climb_x = 17f;
+            private float lad_climb_y = 7f;
+            private float lad_climb_z = 52.78f;
+            //column
+            public static float col_climb_x = 46f;
+            public static float col_climb_y = 5.5f;
+            public static float col_climb_z = 79.5f;
 
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         private PlayerInput _playerInput;
 #endif
         private Animator _animator;
+        private Animator anim;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
@@ -139,7 +159,11 @@ namespace StarterAssets
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
+            initPara = Instantiate(parachute, this.transform.position + new Vector3(0, -3.5f, 0), Quaternion.AngleAxis(90, new Vector3(0, 1, 0) ) );
+            initPara.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+
+
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
@@ -159,10 +183,126 @@ namespace StarterAssets
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
+            anim = GetComponent<Animator>();
+            initPara.transform.position = this.transform.position;
 
-            JumpAndGravity();
             GroundedCheck();
+
+            if (!climbing)
+            {
+            JumpAndGravity();
             Move();
+            }
+
+            //Ladder Climbing
+            if (climbingController.ladderClose && Input.GetKey("c"))
+            {
+                climbing = true;
+                transform.position = new Vector3(lad_climb_x, lad_climb_y, lad_climb_z);
+
+                anim.SetTrigger("Climb");
+                
+
+                //this.transform.Rotate(-0.17f, 39f, 0.5f, Space.World);
+                //Debug.Log("KEY DOWNNN THIRDDD");
+
+                //Ladder Climbing
+                if (Input.GetKey(KeyCode.LeftArrow) && (lad_climb_z < 54.3f))
+                {
+                    lad_climb_z = lad_climb_z + 0.1f;
+                }
+                if (Input.GetKey(KeyCode.RightArrow) && (lad_climb_z > 51.3f))
+                {
+                    lad_climb_z = lad_climb_z + (-0.1f);
+                }
+                if (Input.GetKey(KeyCode.UpArrow) && (lad_climb_y < 12f))
+                {
+                    lad_climb_y = lad_climb_y + 0.1f;
+                    Debug.Log("climb move up: " + lad_climb_y);
+                }
+                if (Input.GetKey(KeyCode.DownArrow) && (lad_climb_y > 5.7f))
+                {
+                    lad_climb_y = lad_climb_y + (-0.1f);
+                    Debug.Log("climb move down: " + lad_climb_y);
+                }
+                if (lad_climb_y >= 12f)
+                {
+                    lad_climb_x = 22f;
+                    lad_climb_y = 15f;
+                    lad_climb_z = 54f;
+                }
+
+            }
+            else
+            {
+                climbing = false;
+            }
+
+            //Column Climbing
+            if (climbingController.columnClose && Input.GetKey(KeyCode.LeftShift))
+            {
+                climbing = true;
+                transform.position = new Vector3(col_climb_x, col_climb_y, col_climb_z);
+
+                anim.Play("ClimbLadderInPlace");
+                _animator.Play("ClimbLadderInPlace");
+                //anim.SetTrigger("Climb");
+                //anim.PlayInFixedTime("Climb", 1, 2.0f);
+
+                //this.transform.Rotate(-0.17f, 39f, 0.5f, Space.World);
+                //Debug.Log("KEY DOWNNN THIRDDD");
+
+                if (Input.GetKey(KeyCode.LeftArrow) && (col_climb_z > 78.3f))
+                {
+                    col_climb_z = col_climb_z - 0.1f;
+                }
+                if (Input.GetKey(KeyCode.RightArrow) && (col_climb_z < 80.5f))
+                {
+                    col_climb_z = col_climb_z + 0.1f;
+                }
+                if (Input.GetKey(KeyCode.UpArrow) && (col_climb_y < 9f))
+                {
+                    col_climb_y = col_climb_y + 0.1f;           
+                }
+                if (Input.GetKey(KeyCode.DownArrow) && (col_climb_y > 4f))
+                {
+                    col_climb_y = col_climb_y - 0.1f;
+                }
+                if (col_climb_y >= 9f)
+                {
+                    col_climb_x = 43f;
+                    col_climb_y = 12.36f;
+                    col_climb_z = 79.43f;
+                }
+
+            }
+            else
+            {
+                climbing = false;
+            }
+
+
+
+        }
+
+        private void OnCollisionExit(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("TreePlatform"))
+            {
+                lad_climb_x = 17f;
+                lad_climb_y = 7f;
+                lad_climb_z = 52.78f;
+
+                Debug.Log("platform exit..........." + lad_climb_y);
+            }
+            if (collision.gameObject.CompareTag("Column"))
+            {
+                col_climb_x = 46f;
+                col_climb_y = 5.5f;
+                col_climb_z = 79.5f;
+
+                Debug.Log("column exit..........." + col_climb_y);
+            }
         }
 
         private void LateUpdate()
@@ -177,8 +317,6 @@ namespace StarterAssets
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
-
-            _animIDClimb = Animator.StringToHash("Climb");
 
         }
 
@@ -195,6 +333,7 @@ namespace StarterAssets
             {
                 _animator.SetBool(_animIDGrounded, Grounded);
             }
+           
         }
 
         private void CameraRotation()
@@ -349,9 +488,20 @@ namespace StarterAssets
             }
 
             // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-            if (_verticalVelocity < _terminalVelocity)
+            if ((_verticalVelocity < _terminalVelocity) && (Input.GetKey("g") || Input.GetKey(KeyCode.Space) ) && !Grounded)
             {
+                float rr = _verticalVelocity + Gravity * Time.deltaTime;
+                _verticalVelocity = (rr / 1.5f);
+                anim.SetTrigger("Glide");
+                initPara.SetActive(true);
+                anim.SetBool("notGlide", false);
+
+            }
+            else if (_verticalVelocity < _terminalVelocity) 
+            {
+                anim.SetBool("notGlide", true);
                 _verticalVelocity += Gravity * Time.deltaTime;
+                initPara.SetActive(false) ;
             }
         }
 

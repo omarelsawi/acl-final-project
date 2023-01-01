@@ -17,6 +17,10 @@ TagManager:
   - rock
   - arrow
   - sword
+  - LadderClose
+  - ColumnClose
+  - TreePlatform
+  - Column
   layers:
   - Default
   - TransparentFX
