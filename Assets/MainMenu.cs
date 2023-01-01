@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public int LevelChosen = 1;
-
-
+    public Slider volume;
+    public Slider Audio;
+    public void Update()
+    {
+        
+    }
     public void Quit()
     {
         Application.Quit();
@@ -30,13 +35,13 @@ public class MainMenu : MonoBehaviour
         switch (LevelChosen)
         {
             case 1:
-                
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 break;
             case 2:
-                
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
                 break;
-            default:
-                
+            case 3:
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
                 break;
         }
 
