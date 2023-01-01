@@ -18,8 +18,8 @@ public class enemy_agent : MonoBehaviour
     Animator animator;
     bool gotAttacked;
     bool alert;
-    int maxHealth = 20;
-    int currentHealth;
+    float maxHealth = 20f;
+    float currentHealth;
     float attackTimer = 0f;
     bool dead;
     bool stop;
@@ -33,7 +33,7 @@ public class enemy_agent : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        if (gameObject.CompareTag("Moblin")) maxHealth = 30;
+        if (gameObject.CompareTag("Moblin")) maxHealth = 30f;
         currentHealth = maxHealth;
         UpdateHealthBar();
     }
@@ -42,7 +42,7 @@ public class enemy_agent : MonoBehaviour
     void Update()
     {
         attackTimer = Time.deltaTime * Time.timeScale;
-        if (!dead && currentHealth <= 0)
+        if (!dead && currentHealth <= 0f)
             Die();
         if (link.GetComponent<link_main>().dead)
             StopChasing();
@@ -76,8 +76,9 @@ public class enemy_agent : MonoBehaviour
     }
     public void TakeDamage(int x)
     {
-        currentHealth = currentHealth - x > 0 ? currentHealth - x : 0;
+        currentHealth = currentHealth - x > 0f ? currentHealth - x : 0f;
         UpdateHealthBar();
+        animator.SetTrigger("GetHit");
     }
     void Die()
     {
