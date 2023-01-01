@@ -12,7 +12,10 @@ public class arrow : MonoBehaviour
             script.TakeDamage(5);
             script.campArea.GetComponent<camp_area>().alert = true;
         }
-
+        if (collision.gameObject.CompareTag("Boss"))
+        {
+            collision.gameObject.GetComponent<Boss>().decreaseHealth(5);
+        }
         GetComponent<BoxCollider>().enabled = false;
         Destroy(transform.GetComponent<Rigidbody>());
         Destroy(gameObject, 3f);
