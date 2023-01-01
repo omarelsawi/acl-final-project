@@ -10,4 +10,10 @@ Assets/kawetofe_Assets/medievalTentSmall/textures/*.png filter=lfs diff=lfs merg
 Assets/Polytope[[:space:]]Studio/Lowpoly[[:space:]]Medieval[[:space:]]Demos/Environment_Free/Terrain/New_Terrain.asset filter=lfs diff=lfs merge=lfs -text
 Assets/Polytope[[:space:]]Studio/Lowpoly[[:space:]]Medieval[[:space:]]Environments/Sources/Textures/*.png filter=lfs diff=lfs merge=lfs -text
 Assets/Models/Sword/Materials/Sword_Textures01.tga filter=lfs diff=lfs merge=lfs -text
-
+Assets/old-battle-arena/**/*.fbx filter=lfs diff=lfs merge=lfs -text
+Assets/old-battle-arena/**/*.dae filter=lfs diff=lfs merge=lfs -text
+Assets/old-battle-arena/**/*.png filter=lfs diff=lfs merge=lfs -text
+Assets/Boss/**/*.fbx filter=lfs diff=lfs merge=lfs
+Assets/Boss/**/*.dae filter=lfs diff=lfs merge=lfs
+Assets/Boss/**/*.png filter=lfs diff=lfs merge=lfs
+Assets/Animations/**/*.fbx filter=lfs diff=lfs merge=lfs -text

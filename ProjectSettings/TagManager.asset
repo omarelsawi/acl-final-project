@@ -13,39 +13,43 @@ TagManager:
   - bomb
   - shrinegoalz
   - Arrow
+  - BubbleShield
+  - rock
+  - arrow
+  - sword
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - notMesh
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  -
+  - Ground
+  - Player
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
   m_SortingLayers:
   - name: Default
     uniqueID: 0
