@@ -62,6 +62,9 @@ public class Boss : MonoBehaviour
     private GameObject rock;
     public float gravity = 9.81f;
     private float velocity = 0.0f;
+    private bool timeFinish;
+    private bool notFirstTime;
+    
 
     private void Awake()
     {
@@ -72,112 +75,142 @@ public class Boss : MonoBehaviour
 
     private void Update()
     {
-        if (health <= 0 && master.transform.position.y < 1)
+        if (canAttack)
+        {
+            // Make the boss look toward the player
+            //transform.LookAt(player);
+        }
+        else
+        {
+            // Make the boss look away from the player
+            //transform.LookAt(null);
+        }
+        if (rock && towardBoss)
+        {
+            // Check if the master is currently flying
+            if (master.transform.position.y < maxHeight)
+            {
+                // Enable the shield
+                shield.SetActive(true);
+            }
+            else
+            {
+                // Disable the shield
+                shield.SetActive(false);
+            }
+        }
+
+        Debug.Log("health"+health);
+        if (health <= 0)
         {
             Dye();
         }
 
-        if (master.transform.position.y < maxHeight && !onGround)
+        if (master && master.transform.position.y < maxHeight && !onGround && health > 0)
         {
             flying();
         }
 
-        if (master.transform.position.y > 0 && onGround)
+        if (master &&  master.transform.position.y > 1 && onGround && health > 0 )
         {
             falling();
         }
 
-        if (master.transform.position.y < 1)
+        if (master && master.transform.position.y < 1 && health > 0)
         {
-            StartCoroutine(onFloor());
+            Invoke(nameof(onFloor), 0.5f);
         }
 
-        if (health <= 100 && !alreadyMoved && master.transform.position.y > 4.5 && canAttack)
+        if (master &&  health <= 100 && !alreadyMoved && master.transform.position.y > 4.5 && canAttack && health > 0)
         {
             agent.transform.position = RandomNavmeshLocation(100f);
             alreadyMoved = true;
             Invoke(nameof(ResetMove), 20);
         }
 
-        if (master.transform.position.y > 3)
+        if (master && master.transform.position.y > 3 && health > 0)
         {
             master.GetComponent<CapsuleCollider>().center = new Vector3(0, 0, 0);
         }
+        if(notFirstTime == false)
+            notFirstTime = true;
 
-        //if (damageRock)
-        //{
-        //    // Wait for a short time before making the boss fall to the ground
-        //    StartCoroutine(WaitForSecondsCoroutine());
 
-        //    // Set onGround to true and call the falling function
-        //    onGround = true;
-        //    falling();
-        //}
 
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!alreadyAttacked && canAttack && canHit())
+        if (!alreadyAttacked && canAttack && canHit() && health > 0)
         {
             StartCoroutine(AttackPlayer());
             alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), 15);
+            int wait = notFirstTime ? 20 : 30;
+            Invoke(nameof(ResetAttack), wait);
         }
 
-        Debug.Log("rock in update " + rock);
-
+        Debug.Log("rock123 " + rock);
         if (rock)
         {
             if (rock.GetComponent<rock>().getDamage())
             {
+                Debug.Log("rock damageddddd ");
+
                 towardBoss = true;
                 damageRock = true;
             }
         }
 
-        currAttackDelay -= Time.deltaTime;
-        Vector3 aim = player.position - transform.position;
-        aim.y = 0;
-        transform.forward = aim;
+        if (canAttack)
+        {
+            currAttackDelay -= Time.deltaTime;
+            Vector3 aim = player.position - transform.position;
+            aim.y = 0;
+            transform.forward = aim;
+        }
+        else
+        {
+            transform.forward = new Vector3(0,0,0);
+
+        }
     }
 
 
 
-    private IEnumerator onFloor()
+    private void onFloor()
     {
+        //transform.LookAt(null);
+
+        onGround = true;
         animator.SetBool("hurtOnFlorr", true);
-        //Debug.Log(onGround);
-        yield return new WaitForSeconds(10);
+        Debug.Log("onFloor");
+        damageRock = false;
+        int wait = notFirstTime ? 6 : 10;
+
+        Invoke(nameof(EndOnFloor), wait);
+    }
+
+    private void EndOnFloor()
+    {
+        //transform.LookAt(player);
+
         onGround = false;
         canAttack = true;
         shield.SetActive(true);
+        towardBoss = false;
         animator.SetBool("hurtOnFlorr", false);
         animator.SetBool("fly", true);
+        animator.SetBool("fall", false);
     }
 
-    IEnumerator WaitForSecondsCoroutine()
-    {
-        // Wait for 0.5 seconds
-        yield return new WaitForSeconds(0.5f);
-
-        // The code below this line will be executed after 0.5 seconds
-        //Debug.Log("Waited for 0.5 seconds");
-    }
-
-    IEnumerator Wait(int seconds)
-    {
-        //Debug.Log("inini");
-        yield return new WaitForSeconds(seconds); // wait for 5 sec
-
-    }
     private void fall()
     {
-        //Debug.Log("ininnnicnsjcnajkcas");
+        Debug.Log("ininnnicnsjcnajkcas");
         animator.SetBool("fly", false);
         animator.SetBool("fall", true);
         canAttack = false;
         onGround = true;
-        towardBoss = false;
+        while(master.transform.position.y > 0) //&& onGround
+            falling();
     }
 
     private bool canHit()
@@ -193,12 +226,16 @@ public class Boss : MonoBehaviour
 
     private IEnumerator AttackPlayer()
     {
+        rock = null;
+        damageRock = false;
+        onGround = false;
         staticRock = true;
+        timeFinish = false;
 
         // Make sure enemy doesn't move
         // agent.SetDestination(transform.position);
 
-        transform.LookAt(player);
+        //transform.LookAt(player);
 
         // Attack code here
         Vector3 position = new Vector3(master.transform.position.x, master.transform.position.y + 10, master.transform.position.z);
@@ -206,28 +243,45 @@ public class Boss : MonoBehaviour
         Rigidbody rb = rock.GetComponent<Rigidbody>();
         rock.transform.SetParent(master.transform);
         damageRock = false;
-        yield return new WaitForSecondsRealtime(2);
-        if (rock)
+        int wait = notFirstTime ? 5 : 15;
+
+        Invoke(nameof(timeOut), wait);
+
+        while (!towardBoss && !timeFinish)
         {
+            yield return null;
+        }
+        if (rock)
+                {
             rock.transform.SetParent(null);
             staticRock = false;
             if (towardBoss)
             {
+
                 shield.SetActive(false);
+                Debug.Log("shield is active " + shield.activeInHierarchy);
                 rb.velocity = new Vector3(0, -1, 0) * 10;
             }
             else
             {
+                animator.SetTrigger("throwRock");
+
                 Vector3 moveDirection = (player.transform.position - rock.transform.position).normalized * 30;
                 rb.velocity = new Vector3(moveDirection.x, moveDirection.y + 1.5f, moveDirection.z);
             }
         }
     }
 
+    private void timeOut()
+    {
+        timeFinish = true;
+    }
+
     private void falling()
     {
-        master.transform.position -= new Vector3(0, 0.1f, 0);
+        master.transform.position -= new Vector3(0, 0.01f, 0);
     }
+
     private void flying()
     {
         animator.SetBool("fly", true);
@@ -250,24 +304,39 @@ public class Boss : MonoBehaviour
         waiting = false;
     }
     
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
+ 
+  
+    public void disapear() {
+        //Time.timeScale = 0;
+        Destroy(master);
+    }
 
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
-    }
-    private void DestroyEnemy()
-    {
-        Destroy(gameObject);
-    }
+
 
     private void Dye()
     {
-        // Update the player's position based on their velocity
-        transform.position += Vector3.down * velocity * Time.deltaTime;
+        float velocity = 5f * Time.deltaTime;
 
-        // Apply a downward force to the player
-        velocity += gravity * Time.deltaTime;
+        // Check if the object is already touching the ground
+
+        if (master)
+        {
+            if (master.transform.position.y > 1.5)
+            {
+                // If not, move the object downwar  d with the fall velocity
+                master.transform.position += Vector3.down * velocity;
+                if (master.transform.position.y < 4)
+                    animator.SetTrigger("die");
+
+            }
+            if (master.transform.position.y < 1.5)
+            {
+                Vector3 position = master.transform.position;
+                master.transform.position = new Vector3(position.x, -1, position.z);
+
+            }
+        }
+        Invoke(nameof(disapear), 5);
     }
 
     public Vector3 RandomNavmeshLocation(float radius)
@@ -299,12 +368,14 @@ public class Boss : MonoBehaviour
         //Debug.Log("in CollisionDetected");
         //Debug.Log("CompareTag" + collision.gameObject.CompareTag("rock"));
         //Debug.Log("damageRock" + damageRock);
-
+        Debug.Log("damageRock in collison " + damageRock);
         if (collision.gameObject.CompareTag("rock") && damageRock)
         {
+            canAttack = false;
             Debug.Log("rock collision");
             decreaseHealth(40);
-            fall();
+            if(health > 0)
+                fall();
         }
         else if (collision.gameObject.CompareTag("sword") && !shield.activeInHierarchy)
         {
