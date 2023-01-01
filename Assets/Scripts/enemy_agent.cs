@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class enemy_agent : MonoBehaviour
 {
     public Transform target;
+    public GameObject link;
     public GameObject campArea;
     NavMeshAgent navMeshAgent;
     private bool chase;
@@ -20,6 +22,8 @@ public class enemy_agent : MonoBehaviour
     int currentHealth;
     float attackTimer = 0f;
     bool dead;
+    bool stop;
+    [SerializeField] private Image healthbarSprite;
     private void Awake()
     {
         Random.InitState(System.DateTime.Now.Millisecond);
@@ -31,6 +35,7 @@ public class enemy_agent : MonoBehaviour
         animator = GetComponent<Animator>();
         if (gameObject.CompareTag("Moblin")) maxHealth = 30;
         currentHealth = maxHealth;
+        UpdateHealthBar();
     }
 
     // Update is called once per frame
@@ -39,8 +44,9 @@ public class enemy_agent : MonoBehaviour
         attackTimer = Time.deltaTime * Time.timeScale;
         if (!dead && currentHealth <= 0)
             Die();
-
-        if (!dead)
+        if (link.GetComponent<link_main>().dead)
+            StopChasing();
+        if (!dead && !stop)
         {
             CheckDistance();
             if (chase)
@@ -55,11 +61,23 @@ public class enemy_agent : MonoBehaviour
 
         }
     }
+    void UpdateHealthBar()
+    {
+        healthbarSprite.fillAmount = currentHealth / maxHealth;
+    }
 
+    void StopChasing()
+    {
+        navMeshAgent.SetDestination(transform.position);
+        chase = false;
+        alert = false;
+        attack = false;
+        stop = true;
+    }
     public void TakeDamage(int x)
     {
         currentHealth = currentHealth - x > 0 ? currentHealth - x : 0;
-        Debug.Log(gameObject.name + "'s Health: " + currentHealth);
+        UpdateHealthBar();
     }
     void Die()
     {
