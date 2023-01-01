@@ -195,13 +195,14 @@ namespace StarterAssets
             }
 
             //Ladder Climbing
-            if (climbingController.ladderClose && Input.GetKey("c"))
+            if (climbingController.ladderClose && Input.GetKey(KeyCode.LeftShift))
             {
                 climbing = true;
                 transform.position = new Vector3(lad_climb_x, lad_climb_y, lad_climb_z);
+                anim.Play("ClimbLadderInPlace");
+                _animator.Play("ClimbLadderInPlace");
+                //anim.SetTrigger("Climb");
 
-                anim.SetTrigger("Climb");
-                
 
                 //this.transform.Rotate(-0.17f, 39f, 0.5f, Space.World);
                 //Debug.Log("KEY DOWNNN THIRDDD");
