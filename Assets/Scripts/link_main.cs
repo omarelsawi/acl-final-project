@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class link_main : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class link_main : MonoBehaviour
     bool shielded;
     bool melee = true;
     int maxHealth = 24;
-    int currentHealth;
+    public static int currentHealth;
     [HideInInspector]
     public bool dead;
     public CharacterController controller;
@@ -171,5 +172,20 @@ public class link_main : MonoBehaviour
         GetComponent<PlayerInput>().enabled = x;
         playerAimCam.SetActive(x);
         playerFollowCam.SetActive(!x);
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("portal1"))
+        {
+            GameObject[] x = GameObject.FindGameObjectsWithTag("Moblin");
+            GameObject[] y = GameObject.FindGameObjectsWithTag("Bokoblin");
+            if (x.Length == 0 && y.Length == 0)
+                SceneManager.LoadScene("Level_2");
+        }
+        if (collision.gameObject.CompareTag("shrinegoalz"))
+        {
+            SceneManager.LoadScene("Boss");
+        }
     }
 }

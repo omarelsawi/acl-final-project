@@ -79,8 +79,7 @@ public class enemy_agent : MonoBehaviour
         campArea.GetComponent<camp_area>().alert = true;
         currentHealth = currentHealth - x > 0f ? currentHealth - x : 0f;
         UpdateHealthBar();
-        if (!dead)
-            animator.SetTrigger("GetHit");
+        animator.SetTrigger("GetHit");
     }
     void Die()
     {

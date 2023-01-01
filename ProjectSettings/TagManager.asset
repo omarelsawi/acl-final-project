@@ -21,6 +21,7 @@ TagManager:
   - ColumnClose
   - TreePlatform
   - Column
+  - portal1
   layers:
   - Default
   - TransparentFX
@@ -28,32 +29,32 @@ TagManager:
   - notMesh
   - Water
   - UI
-  -
-  - Ground
-  - Player
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0

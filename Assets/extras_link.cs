@@ -20,12 +20,12 @@ public class extras_link : MonoBehaviour
     public GameObject bombeffect;
     public GameObject bombeffect2;
     GameObject bomb_projectile;
+    public int link_health;
 
     public TMP_Text ability_hud;
     public TMP_Text weapon_hud;
 
 
-    public int link_health;
     public Image[] hearts;
     public int noOfhearts;
     public int noOfhalfs;
@@ -40,8 +40,8 @@ public class extras_link : MonoBehaviour
         bombInstantiated = false;
         anim = GetComponent<Animator>();
         wantsToDetonate = false;
-        link_health = 24;
-
+        link_health = link_main.currentHealth;
+        
 
         ability_hud.text = "Bombs";
         weapon_hud.text = "Melee";
@@ -53,6 +53,8 @@ public class extras_link : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        link_health = link_main.currentHealth;
+
         if (Input.GetKeyDown("1"))
         {
             ablities = 1;
