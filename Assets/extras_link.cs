@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class extras_link : MonoBehaviour
 {
@@ -19,12 +21,33 @@ public class extras_link : MonoBehaviour
     public GameObject bombeffect2;
     GameObject bomb_projectile;
 
+    public TMP_Text ability_hud;
+    public TMP_Text weapon_hud;
+
+
+    public int link_health;
+    public Image[] hearts;
+    public int noOfhearts;
+    public int noOfhalfs;
+
+    public Sprite fullheart;
+    public Sprite halfheart;
+
+
     void Start()
     {
         ablities = 1;
         bombInstantiated = false;
         anim = GetComponent<Animator>();
         wantsToDetonate = false;
+        link_health = 24;
+
+
+        ability_hud.text = "Bombs";
+        weapon_hud.text = "Melee";
+
+
+
     }
 
     // Update is called once per frame
@@ -33,6 +56,7 @@ public class extras_link : MonoBehaviour
         if (Input.GetKeyDown("1"))
         {
             ablities = 1;
+            ability_hud.text = "Bombs";
 
             GameObject[] obstacles_1 = GameObject.FindGameObjectsWithTag("icecube");
             foreach (GameObject obstacle in obstacles_1)
@@ -45,6 +69,7 @@ public class extras_link : MonoBehaviour
         if (Input.GetKeyDown("2"))
         {
             ablities = 2;
+            ability_hud.text = "Cryonis";
 
             GameObject[] obstacles_2 = GameObject.FindGameObjectsWithTag("bomb");
             foreach (GameObject obstacle in obstacles_2)
@@ -59,6 +84,7 @@ public class extras_link : MonoBehaviour
         if (Input.GetKeyDown("4"))
         {
             ablities = 4;
+            ability_hud.text = "Stasis";
 
             GameObject[] obstacles_1 = GameObject.FindGameObjectsWithTag("icecube");
             foreach (GameObject obstacle in obstacles_1)
@@ -77,6 +103,44 @@ public class extras_link : MonoBehaviour
             runeAbility(ablities);
 
         }
+
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            if (weapon_hud.text.Equals("Melee")) {
+                weapon_hud.text = "Ranged";
+            }
+            else if (weapon_hud.text.Equals("Ranged"))
+            {
+                weapon_hud.text = "Melee";
+            }
+        }
+
+
+        noOfhearts = link_health/2;
+        noOfhalfs = link_health%2;
+
+
+        for (int i = 0; i < 12; i++) {
+            if (i < noOfhearts)
+            {
+
+                hearts[i].enabled = true;
+                hearts[i].sprite = fullheart;
+
+            }
+            else {
+
+                hearts[i].enabled = false;
+            }
+        }
+
+        if (noOfhalfs > 0)
+        {
+            hearts[noOfhearts-1].enabled = true;
+            hearts[noOfhearts-1].sprite = halfheart;
+        }
+
+  
+
 
 
 
