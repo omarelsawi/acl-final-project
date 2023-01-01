@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.AI;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
+
 
 public class Boss : MonoBehaviour
 {
@@ -305,6 +307,8 @@ public class Boss : MonoBehaviour
     public void disapear() {
         //Time.timeScale = 0;
         Destroy(master);
+        SceneManager.LoadScene("studioCreditsRoll");
+
     }
 
 
@@ -375,7 +379,7 @@ public class Boss : MonoBehaviour
         {
             canAttack = false;
             Debug.Log("rock collision");
-            decreaseHealth(40);
+            decreaseHealth(200);
             if(health > 0)
                 fall();
         }
