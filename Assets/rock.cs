@@ -11,15 +11,23 @@ public class rock : MonoBehaviour
     {
         damage = false;
     }
+    private void Update()
+    {
+        Debug.Log("velcity: "+(this.gameObject.GetComponent<Rigidbody>().velocity));
 
+    }
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("rock collision >....");
 
         if (collision.gameObject.CompareTag("arrow"))
         {
-            damage = true;
-            Debug.Log("rock hit !!");
+            //damage = true;
+
+            if (this.gameObject.GetComponent<Rigidbody>().velocity.x < 1)
+            {
+                damage = true;
+            }
         }
       
         else
