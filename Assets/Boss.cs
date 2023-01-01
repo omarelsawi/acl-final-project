@@ -14,6 +14,7 @@ public class Boss : MonoBehaviour
     public NavMeshAgent agent;
     private GameObject master;
     private GameObject shield;
+    public Material material;
 
     // Transform and LayerMask variables
     public Transform player;
@@ -77,6 +78,11 @@ public class Boss : MonoBehaviour
 
     private void Update()
     {
+        if(material && health <= 100)
+        {
+            shield.GetComponent<Renderer>().material =  material;
+        }
+
         if (canAttack)
         {
             // Make the boss look toward the player
@@ -379,7 +385,7 @@ public class Boss : MonoBehaviour
         {
             canAttack = false;
             Debug.Log("rock collision");
-            decreaseHealth(200);
+            decreaseHealth(40);
             if(health > 0)
                 fall();
         }
