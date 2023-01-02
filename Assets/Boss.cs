@@ -8,6 +8,10 @@ using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
+    //Audio Clips
+
+    public AudioSource[] audioSources;  // 1) throwRock  2) smashRock 3)telaporate 4)die  5)hurt 6) criticalHit  7) fall
+
     // NavMeshAgent and GameObject references
     public bool towardBoss = false;
     public NavMeshAgent agent;
@@ -166,7 +170,7 @@ public class Boss : MonoBehaviour
             currAttackDelay -= Time.deltaTime;
             Vector3 aim = player.position - transform.position;
             aim.y = 0;
-            transform.forward = aim;
+            master.transform.forward = aim;
         }
         else
         {
@@ -331,6 +335,8 @@ public class Boss : MonoBehaviour
                 if (master.transform.position.y < 4)
                 {
                     ///Sound When an enemy dies
+                    
+
                     animator.SetTrigger("die");
                 }
 
@@ -414,6 +420,12 @@ public class Boss : MonoBehaviour
             velocity = 0.0f;
         }
     }
+
+    void PlaySound(int index)
+    {
+        audioSources[index].Play();
+    }
+
 
 
 }
