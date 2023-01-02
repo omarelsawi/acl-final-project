@@ -8,6 +8,7 @@ public class post_attack : StateMachineBehaviour
     link_main l_script;
     bool attacked;
     float attackRange;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class link_main : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class link_main : MonoBehaviour
     public GameObject playerFollowCam;
     public GameObject playerAimCam;
     Animator animator;
-    bool shielded;
+    bool shielded=false;
     bool melee = true;
     int maxHealth = 24;
     int currentHealth;
@@ -29,17 +30,33 @@ public class link_main : MonoBehaviour
     float shieldTimer = 0f;
     float shieldCoolDown = 5f;
     bool autoLowerShield;
+
+    public int link_health;
+
+    public Image[] hearts;
+    public int noOfhearts;
+    public int noOfhalfs;
+
+    public Sprite fullheart;
+    public Sprite halfheart;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
         currentHealth = maxHealth;
+
+        link_health = currentHealth;
+        noOfhearts = link_health / 2;
+        noOfhalfs = link_health % 2;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        link_health = currentHealth;
+
         if (!dead && currentHealth <= 0)
             Die();
         if (Input.GetKeyDown("i"))
@@ -74,6 +91,32 @@ public class link_main : MonoBehaviour
             else if (Input.GetMouseButtonUp(1))
                 UnDrawBow();
         }
+
+        noOfhearts = link_health / 2;
+        noOfhalfs = link_health % 2;
+
+
+        for (int i = 0; i < 12; i++)
+        {
+            if (i < noOfhearts)
+            {
+
+                hearts[i].enabled = true;
+                hearts[i].sprite = fullheart;
+
+            }
+            else
+            {
+
+                hearts[i].enabled = false;
+            }
+        }
+
+        if (noOfhalfs > 0)
+        {
+            hearts[noOfhearts - 1].enabled = true;
+            hearts[noOfhearts - 1].sprite = halfheart;
+        }
     }
     void SwitchWeapons() 
     {
@@ -103,10 +146,7 @@ public class link_main : MonoBehaviour
         arrowRef.GetComponent<Rigidbody>().AddForce(transform.forward * arrowForce, ForceMode.Impulse);
     }
 
-    public static int gethealth(int currentHealth) {
-        return currentHealth;
-
-    }
+   
     void DrawBow()
     {
         animator.SetBool("DrawBow", true);
@@ -129,6 +169,7 @@ public class link_main : MonoBehaviour
     {
         if (!shielded & !invincible)
         {
+
             currentHealth = currentHealth-x > 0? currentHealth - x : 0;
         }
         Debug.Log(gameObject.name + "'s Health: " + currentHealth);

@@ -20,9 +20,10 @@ public class enemy_agent : MonoBehaviour
     bool alert;
     float maxHealth = 20f;
     float currentHealth;
-    float attackTimer = 0f;
     bool dead;
     bool stop;
+    bool attacked = false;
+
     [SerializeField] private Image healthbarSprite;
     private void Awake()
     {
@@ -41,7 +42,6 @@ public class enemy_agent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        attackTimer = Time.deltaTime * Time.timeScale;
         if (!dead && currentHealth <= 0f)
             Die();
         if (link.GetComponent<link_main>().dead)
@@ -54,7 +54,7 @@ public class enemy_agent : MonoBehaviour
                 Chase();
             }
 
-            else if (attack && attackTimer >= attackFrequency)
+            else if (attack)
             {
                 Attack();
             }
@@ -102,7 +102,23 @@ public class enemy_agent : MonoBehaviour
         {
             animator.SetTrigger("Attack Horizontally");
         }
-        attackTimer = 0f;
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (!attacked && (stateInfo.IsName("Vertical Attack") || stateInfo.IsName("Horizontal Attack"))
+            && stateInfo.normalizedTime <= 0.6f && stateInfo.normalizedTime >= 0.4f
+               && Vector3.Distance(link.transform.position, animator.transform.position) < attackArea)
+        {
+            attacked = true;
+
+            if (stateInfo.IsName("Vertical Attack"))
+                link.GetComponent<link_main>().TakeDamage((animator.tag == "Moblin") ? 4 : 3);
+            else
+                link.GetComponent<link_main>().TakeDamage((animator.tag == "Moblin") ? 2 : 1);
+
+        }
+        if (stateInfo.normalizedTime > 0.7f)
+            attacked = false;
+
     }
     void Chase()
     {
