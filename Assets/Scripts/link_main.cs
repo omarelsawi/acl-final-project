@@ -140,10 +140,14 @@ public class link_main : MonoBehaviour
     }
     void Shoot()
     {
+        Vector3 mousePos = Input.mousePosition;
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        Physics.Raycast(ray);
+
         GameObject arrowRef = Instantiate(arrow, arrowPoint.position,
             transform.rotation);
         arrowRef.transform.RotateAround(arrowRef.transform.position, transform.right, 90f);
-        arrowRef.GetComponent<Rigidbody>().AddForce(transform.forward * arrowForce, ForceMode.Impulse);
+        arrowRef.GetComponent<Rigidbody>().AddForce(ray.direction * arrowForce, ForceMode.Impulse);
     }
 
    

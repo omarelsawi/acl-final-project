@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class arrow : MonoBehaviour
 {
+    private void Start()
+    {
+        Destroy(gameObject, 7f);
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Moblin") || collision.gameObject.CompareTag("Bokoblin"))
@@ -15,6 +19,5 @@ public class arrow : MonoBehaviour
 
         GetComponent<BoxCollider>().enabled = false;
         Destroy(transform.GetComponent<Rigidbody>());
-        Destroy(gameObject, 3f);
     }
 }

@@ -369,7 +369,7 @@ public class Boss : MonoBehaviour
         else
             health = 0;
 
-
+        Debug.Log("Boss Health: " + health);
         CurrentHealth(health);
     }
     public void CollisionDetected(Collision collision)
@@ -399,7 +399,7 @@ public class Boss : MonoBehaviour
             Debug.Log("bomb collision");
             decreaseHealth(10);
         }
-        else if (collision.gameObject.CompareTag("arrow") && !shield.activeInHierarchy)
+        else if (collision.gameObject.CompareTag("Arrow") && !shield.activeInHierarchy)
         {
             Debug.Log("arrow collision");
             decreaseHealth(5);

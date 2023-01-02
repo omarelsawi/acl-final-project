@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -14319,6 +14319,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 0}
+  isGlobal: 0
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!4 &1489201693
 Transform:
   m_ObjectHideFlags: 0
@@ -16705,7 +16710,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   invincible: 0
-  arrowForce: 20
+  arrowForce: 30
   arrowPoint: {fileID: 2092268498}
   arrow: {fileID: 4865309214770636011, guid: db2ae66fa744c2245888f67b77b43083, type: 3}
   bow: {fileID: 3317823750292571233}
