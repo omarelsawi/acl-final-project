@@ -8,32 +8,32 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Armor
-    second: {fileID: 2100000, guid: aa4fcee637ac04ff8bbae5adcd531ccd, type: 2}
+    second: {fileID: 2100000, guid: 97b8d4ede5d234d098f2db6f3f42136a, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Armor_001
-    second: {fileID: 2100000, guid: 2ae1f41f066c54fffa6c79806c82f836, type: 2}
+    second: {fileID: 2100000, guid: 471d147cb8faa4218b380a012ea707e3, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Body
-    second: {fileID: 2100000, guid: c34e57cb5ae8145b6841a735ea2a6282, type: 2}
+    second: {fileID: 2100000, guid: ee7a9fddba8a1456fbe5e6b87b678fff, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Body_001
-    second: {fileID: 2100000, guid: f203c9018aacb46beb7839d07e70f333, type: 2}
+    second: {fileID: 2100000, guid: 00bf7bc0753764da2b8a70ba9dc975f1, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Hair
-    second: {fileID: 2100000, guid: a8bf6e171c6284dde972c68543c57f42, type: 2}
+    second: {fileID: 2100000, guid: a20c5b9565b494d13be3803664e1b925, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Hair_001
-    second: {fileID: 2100000, guid: 0441a0709933d4acbb161bd32f6d6c03, type: 2}
+    second: {fileID: 2100000, guid: d372eb64f5f774b8f8760ea25c305c33, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

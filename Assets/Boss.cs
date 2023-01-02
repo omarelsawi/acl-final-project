@@ -1,9 +1,10 @@
-
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.AI;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
+
 
 public class Boss : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Boss : MonoBehaviour
     public NavMeshAgent agent;
     private GameObject master;
     private GameObject shield;
+    public Material material;
 
     // Transform and LayerMask variables
     public Transform player;
@@ -75,16 +77,17 @@ public class Boss : MonoBehaviour
 
     private void Update()
     {
+        if (material && health <= 100)
+        {
+            shield.GetComponent<Renderer>().material = material;
+        }
+
         if (canAttack)
         {
             // Make the boss look toward the player
             transform.LookAt(player);
         }
-        else
-        {
-            // Make the boss look away from the player
-            transform.LookAt(null);
-        }
+
         if (rock && towardBoss)
         {
             // Check if the master is currently flying
@@ -191,7 +194,7 @@ public class Boss : MonoBehaviour
 
     private void EndOnFloor()
     {
-        transform.LookAt(player);
+        //transform.LookAt(player);
 
         onGround = false;
         canAttack = true;
@@ -310,6 +313,8 @@ public class Boss : MonoBehaviour
     {
         //Time.timeScale = 0;
         Destroy(master);
+        SceneManager.LoadScene("studioCreditsRoll");
+
     }
 
 
@@ -328,8 +333,7 @@ public class Boss : MonoBehaviour
                 master.transform.position += Vector3.down * velocity;
                 if (master.transform.position.y < 4)
                 {
-                    //Sound When an enemy dies
-
+                    ///Sound When an enemy dies
                     animator.SetTrigger("die");
                 }
 
@@ -381,7 +385,7 @@ public class Boss : MonoBehaviour
         {
             canAttack = false;
             Debug.Log("rock collision");
-            decreaseHealth(200);
+            decreaseHealth(40);
             if (health > 0)
                 fall();
         }
