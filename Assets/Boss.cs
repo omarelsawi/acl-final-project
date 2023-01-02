@@ -103,7 +103,6 @@ public class Boss : MonoBehaviour
             }
         }
 
-        Debug.Log("health" + health);
         if (health <= 0)
         {
             Dye();
@@ -151,7 +150,6 @@ public class Boss : MonoBehaviour
             Invoke(nameof(ResetAttack), wait);
         }
 
-        Debug.Log("rock123 " + rock);
         if (rock)
         {
             if (rock.GetComponent<rock>().getDamage())
@@ -185,7 +183,6 @@ public class Boss : MonoBehaviour
 
         onGround = true;
         animator.SetBool("hurtOnFlorr", true);
-        Debug.Log("onFloor");
         damageRock = false;
         int wait = notFirstTime ? 6 : 10;
 

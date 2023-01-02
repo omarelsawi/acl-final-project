@@ -288,4 +288,11 @@ public class link_main : MonoBehaviour
             SceneManager.LoadScene("Boss");
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("rock"))
+        {
+            TakeDamage(4);
+        }
+    }
 }

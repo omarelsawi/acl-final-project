@@ -13,7 +13,6 @@ public class rock : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log("velcity: "+(this.gameObject.GetComponent<Rigidbody>().velocity));
 
     }
     private void OnCollisionEnter(Collision collision)
