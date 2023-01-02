@@ -30,6 +30,8 @@ public class link_main : MonoBehaviour
     float shieldTimer = 0f;
     float shieldCoolDown = 5f;
     bool autoLowerShield;
+    public GameObject pauseMenu;
+    public static bool notpaused=true;
 
     public int link_health;
 
@@ -54,6 +56,17 @@ public class link_main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // Toggle the pause menu
+            TogglePauseMenu();
+        }
+
+        if (!notpaused) { 
+        notpaused = true;
+            TogglePauseMenu();
+        }
 
         link_health = currentHealth;
 
@@ -117,6 +130,16 @@ public class link_main : MonoBehaviour
             hearts[noOfhearts - 1].enabled = true;
             hearts[noOfhearts - 1].sprite = halfheart;
         }
+    }
+
+    
+    void TogglePauseMenu()
+    {
+        // Toggle the active state of the pause menu
+        pauseMenu.gameObject.SetActive(!pauseMenu.gameObject.activeSelf);
+
+        // Freeze or unfreeze the time scale depending on the active state of the pause menu
+        Time.timeScale = pauseMenu.gameObject.activeSelf ? 0 : 1;
     }
     void SwitchWeapons() 
     {
