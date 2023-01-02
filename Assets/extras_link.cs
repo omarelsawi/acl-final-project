@@ -112,7 +112,7 @@ public class extras_link : MonoBehaviour
 
 
         if (player.position.y < -30) {
-            SceneManager.LoadScene("MainMenu");
+             SceneManager.LoadScene("GameOver2"); 
         }
 
 

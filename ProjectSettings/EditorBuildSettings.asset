@@ -17,5 +17,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Boss.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
+  - enabled: 1
+    path: Assets/Scenes/GameOver1.unity
+    guid: 51691249e44f93e4e9602b132b924b96
+  - enabled: 1
+    path: Assets/Scenes/GameOver2.unity
+    guid: be563cf1084b0274b822fe354cf24076
+  - enabled: 1
+    path: Assets/Scenes/GameOver3.unity
+    guid: e2497c05106d415488f9e01bbb9d2d09
+  - enabled: 1
+    path: Assets/Scenes/CreditRoll.unity
+    guid: 2cee77ead815c3a4ba26b3eae4b74012
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}

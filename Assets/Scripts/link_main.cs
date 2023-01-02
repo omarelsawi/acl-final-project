@@ -32,6 +32,7 @@ public class link_main : MonoBehaviour
     bool autoLowerShield;
     public GameObject pauseMenu;
     public static bool notpaused=true;
+    public int currentlevel=1;
 
     public int link_health;
 
@@ -228,6 +229,32 @@ public class link_main : MonoBehaviour
         animator.SetTrigger("Dead");
         dead = true;
         SetComponentsEnabled(false);
+
+        if (currentlevel == 1)
+        {
+            StartCoroutine(StartTimer3());
+        }
+        else if (currentlevel == 3)
+        {
+            StartCoroutine(StartTimer4());
+
+        }
+    }
+
+    IEnumerator StartTimer3()
+    {
+        yield return new WaitForSeconds(6.80F);
+        //yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        SceneManager.LoadScene("GameOver1");
+
+    }
+
+    IEnumerator StartTimer4()
+    {
+        yield return new WaitForSeconds(6.80F);
+        //yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length + anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        SceneManager.LoadScene("GameOver3");
+
     }
 
     void Heal(int x)
