@@ -12,7 +12,7 @@ public class Boss : MonoBehaviour
     public bool towardBoss = false;
     public NavMeshAgent agent;
     private GameObject master;
-    private GameObject shield;
+    public GameObject shield;
     public Material material;
 
     // Transform and LayerMask variables
@@ -152,7 +152,7 @@ public class Boss : MonoBehaviour
 
         if (rock)
         {
-            if (rock.GetComponent<rock>().getDamage())
+            if (rock.GetComponent<rock>().getDamage() && staticRock)
             {
                 Debug.Log("rock damageddddd ");
 
@@ -310,7 +310,7 @@ public class Boss : MonoBehaviour
     {
         //Time.timeScale = 0;
         Destroy(master);
-        SceneManager.LoadScene("studioCreditsRoll");
+        SceneManager.LoadScene("CreditRoll");
 
     }
 

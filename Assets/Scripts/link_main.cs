@@ -39,7 +39,7 @@ public class link_main : MonoBehaviour
     public Image[] hearts;
     public int noOfhearts;
     public int noOfhalfs;
-
+    public bool attacking;
     public Sprite fullheart;
     public Sprite halfheart;
     // Start is called before the first frame update
@@ -92,7 +92,7 @@ public class link_main : MonoBehaviour
                 ShieldUp();
             else if (Input.GetMouseButtonUp(1))
                 ShieldDown();
-            else if (Input.GetMouseButtonDown(0))
+            else if (Input.GetMouseButtonDown(0) && !attacking)
                 SwordAttack();
         } else
         {
@@ -187,10 +187,15 @@ public class link_main : MonoBehaviour
     {
         animator.SetTrigger("Sword Attack");
         Collider[] hits = Physics.OverlapSphere(swordAttackPoint.transform.position, swordRange, enemyLayer);
-
         foreach(Collider enemy in hits)
         {
-            enemy.GetComponent<enemy_agent>().TakeDamage(10);
+            if (enemy.gameObject.CompareTag("Boss"))
+            {
+                if (!enemy.gameObject.GetComponentInParent<Boss>().shield.activeInHierarchy)
+                    enemy.gameObject.GetComponentInParent<Boss>().decreaseHealth(10);
+            }
+            else 
+                enemy.GetComponent<enemy_agent>().TakeDamage(10);
         }
     }
     public void TakeDamage(int x)

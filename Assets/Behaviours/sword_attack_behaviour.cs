@@ -10,6 +10,7 @@ public class sword_attack_behaviour : StateMachineBehaviour
     {
         l = animator.GetComponent<link_main>();
         l.controller.enabled = false;
+        l.attacking = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -22,6 +23,7 @@ public class sword_attack_behaviour : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         l.controller.enabled = true;
+        l.attacking = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
