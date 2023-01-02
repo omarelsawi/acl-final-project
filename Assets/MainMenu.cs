@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -30,14 +31,18 @@ public class MainMenu : MonoBehaviour
         switch (LevelChosen)
         {
             case 1:
-                
+                SceneManager.LoadScene("Level_1_Sawi");
+
                 break;
             case 2:
-                
+                SceneManager.LoadScene("Level_2");
+
                 break;
-            default:
-                
+            case 3:
+                SceneManager.LoadScene("Boss");
+
                 break;
+
         }
 
     }
