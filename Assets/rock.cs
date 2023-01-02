@@ -20,7 +20,7 @@ public class rock : MonoBehaviour
     {
         Debug.Log("rock collision >....");
 
-        if (collision.gameObject.CompareTag("arrow"))
+        if (collision.gameObject.CompareTag("Arrow"))
         {
             //damage = true;
 
