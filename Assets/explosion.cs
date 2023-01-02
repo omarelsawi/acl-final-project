@@ -29,12 +29,6 @@ public class explosion : MonoBehaviour
             {
                 other.gameObject.GetComponent<enemy_agent>().TakeDamage(10);
             }
-            //if (other.gameObject.CompareTag("Enemy"))
-           // {
-                // Apply damage to the enemy and destroy the bomb.
-                // other.gameObject.GetComponent<Enemy>().TakeDamage(10);
-                // DetonateBomb();
-           // }
 
             Destroy(this.gameObject);
         }

@@ -22,7 +22,7 @@ public class link_main : MonoBehaviour
     bool shielded;
     bool melee = true;
     int maxHealth = 24;
-    public static int currentHealth;
+    int currentHealth;
     [HideInInspector]
     public bool dead;
     public CharacterController controller;
@@ -101,6 +101,11 @@ public class link_main : MonoBehaviour
             transform.rotation);
         arrowRef.transform.RotateAround(arrowRef.transform.position, transform.right, 90f);
         arrowRef.GetComponent<Rigidbody>().AddForce(transform.forward * arrowForce, ForceMode.Impulse);
+    }
+
+    public static int gethealth(int currentHealth) {
+        return currentHealth;
+
     }
     void DrawBow()
     {

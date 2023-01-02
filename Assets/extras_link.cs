@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class extras_link : MonoBehaviour
 {
@@ -141,17 +142,10 @@ public class extras_link : MonoBehaviour
             hearts[noOfhearts-1].sprite = halfheart;
         }
 
-  
 
 
-
-
-
-
-
-        if (player.position.y < -50) { 
-        //end game
-        //load main menu
+        if (player.position.y < -30) {
+            SceneManager.LoadScene("MainMenu");
         }
 
 
