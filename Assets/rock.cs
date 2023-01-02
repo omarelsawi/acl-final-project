@@ -28,9 +28,12 @@ public class rock : MonoBehaviour
                 damage = true;
             }
         }
-      
+
         else
+        {
+            SoundManager.instance.PlaySFX(0);
             Destroy(gameObject);
+        }
 
         Debug.Log("damage : " + damage);
         Debug.Log(collision.gameObject.tag);
