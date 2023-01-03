@@ -31,7 +31,7 @@ public class rock : MonoBehaviour
 
         else
         {
-            SoundManager.instance.PlaySFX(0);
+            SoundManager.instance.PlaySFX(1);
             Destroy(gameObject);
         }
 

@@ -77,6 +77,10 @@ public class Boss : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         master = transform.GetChild(0).gameObject;
         shield = master.transform.GetChild(0).gameObject;
+        //Debug.Log("instance" + SoundManager.instance +"..");
+
+        //SoundManager.instance.PlayMusic(0);
+
     }
 
     private void Update()
@@ -129,6 +133,7 @@ public class Boss : MonoBehaviour
 
         if (master && health <= 100 && !alreadyMoved && master.transform.position.y > 4.5 && canAttack && health > 0)
         {
+            SoundManager.instance.PlaySFX(2);
             agent.transform.position = RandomNavmeshLocation(100f);
             alreadyMoved = true;
             Invoke(nameof(ResetMove), 20);
@@ -208,6 +213,7 @@ public class Boss : MonoBehaviour
 
     private void fall()
     {
+        SoundManager.instance.PlaySFX(4);
         Debug.Log("ininnnicnsjcnajkcas");
         animator.SetBool("fly", false);
         animator.SetBool("fall", true);
@@ -257,6 +263,7 @@ public class Boss : MonoBehaviour
         }
         if (rock)
         {
+            SoundManager.instance.PlaySFX(0);
             rock.transform.SetParent(null);
             staticRock = false;
             if (towardBoss)
@@ -314,6 +321,9 @@ public class Boss : MonoBehaviour
     {
         //Time.timeScale = 0;
         Destroy(master);
+        SoundManager.instance.StopBackgroundMusic();
+        SoundManager.instance.StopSFX();
+
         SceneManager.LoadScene("CreditRoll");
 
     }
@@ -334,9 +344,7 @@ public class Boss : MonoBehaviour
                 master.transform.position += Vector3.down * velocity;
                 if (master.transform.position.y < 4)
                 {
-                    ///Sound When an enemy dies
-                    
-
+                    SoundManager.instance.PlaySFX(3);
                     animator.SetTrigger("die");
                 }
 
@@ -367,6 +375,8 @@ public class Boss : MonoBehaviour
 
     public void decreaseHealth(int damage)
     {
+        SoundManager.instance.PlaySFX(5);
+
         if (health - damage >= 0)
             health -= damage;
         else
@@ -386,6 +396,7 @@ public class Boss : MonoBehaviour
         Debug.Log("damageRock in collison " + damageRock);
         if (collision.gameObject.CompareTag("rock") && damageRock)
         {
+            SoundManager.instance.PlaySFX(6);
             canAttack = false;
             Debug.Log("rock collision");
             decreaseHealth(40);
@@ -394,16 +405,21 @@ public class Boss : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("sword") && !shield.activeInHierarchy)
         {
+            SoundManager.instance.PlaySFX(5);
             Debug.Log("sword collision");
             decreaseHealth(10);
         }
         else if (collision.gameObject.CompareTag("bomb") && !shield.activeInHierarchy)
         {
+            SoundManager.instance.PlaySFX(5);
+
             Debug.Log("bomb collision");
             decreaseHealth(10);
         }
         else if (collision.gameObject.CompareTag("Arrow") && !shield.activeInHierarchy)
         {
+            SoundManager.instance.PlaySFX(5);
+
             Debug.Log("arrow collision");
             decreaseHealth(5);
         }

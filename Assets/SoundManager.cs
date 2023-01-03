@@ -29,4 +29,17 @@ public class SoundManager : MonoBehaviour
     {
         sfxSource.PlayOneShot(sfxClips[clip]);
     }
+
+    public void StopBackgroundMusic()
+    {
+        // Stop the background music
+        musicSource.Stop();
+    }
+
+    public void StopSFX()
+    {
+        // Stop the background music
+        sfxSource.Stop();
+    }
+
 }
