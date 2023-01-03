@@ -478,6 +478,7 @@ namespace StarterAssets
                 else
                 {
                     // update animator if using character
+                    SoundManager.instance.PlaySFX(12);
                     if (_hasAnimator)
                     {
                         _animator.SetBool(_animIDFreeFall, true);

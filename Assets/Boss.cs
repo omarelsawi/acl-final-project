@@ -82,9 +82,13 @@ public class Boss : MonoBehaviour
         //SoundManager.instance.PlayMusic(0);
 
     }
-
+    private void Start()
+    {
+        SoundManager.instance.PlayMusic(2);
+    }
     private void Update()
     {
+
         if (material && health <= 100)
         {
             shield.GetComponent<Renderer>().material = material;
@@ -372,7 +376,7 @@ public class Boss : MonoBehaviour
         return finalPosition;
     }
 
-
+    
     public void decreaseHealth(int damage)
     {
         SoundManager.instance.PlaySFX(5);

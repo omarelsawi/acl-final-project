@@ -127,6 +127,7 @@ public class extras_link : MonoBehaviour
                 wantsToDetonate = false;
                 bomb.SetActive(true);
                 bombInstantiated = true;
+                SoundManager.instance.PlaySFX(14);
                 anim.Play("Throwing Bomb");
                 StartCoroutine(StartTimer());
 
@@ -135,6 +136,7 @@ public class extras_link : MonoBehaviour
             else
             {
                 //play explosion animation
+                SoundManager.instance.PlaySFX(8);
                 bombeffect.transform.position = bomb_projectile.transform.position;
                 bombeffect2.transform.position = bomb_projectile.transform.position;
                 bombeffect.SetActive(true);

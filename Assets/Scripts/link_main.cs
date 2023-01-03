@@ -42,6 +42,8 @@ public class link_main : MonoBehaviour
     public bool attacking;
     public Sprite fullheart;
     public Sprite halfheart;
+    private bool released;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -144,6 +146,9 @@ public class link_main : MonoBehaviour
     }
     void SwitchWeapons() 
     {
+        //Sound SwitchWeapons
+        SoundManager.instance.PlaySFX(15);
+
         melee = !melee;
         bow.SetActive(!melee);
         sword.SetActive(melee);
@@ -151,6 +156,8 @@ public class link_main : MonoBehaviour
     }
     void UnDrawBow()
     {
+       
+
         animator.SetBool("DrawBow", false);
         playerAimCam.SetActive(false);
         playerFollowCam.SetActive(true);
@@ -158,15 +165,22 @@ public class link_main : MonoBehaviour
     }
     void ReleaseBow()
     {
+        //if (released)
+        //{
+        //    released = false;
+        //}
         animator.SetTrigger("ReleaseBow");
         playerAimCam.SetActive(false);
         playerFollowCam.SetActive(true);
     }
     void Shoot()
     {
+
         Vector3 mousePos = Input.mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
         Physics.Raycast(ray);
+
+        //SoundManager.instance.PlaySFX(18);
 
         GameObject arrowRef = Instantiate(arrow, arrowPoint.position,
             transform.rotation);
@@ -177,6 +191,10 @@ public class link_main : MonoBehaviour
    
     void DrawBow()
     {
+        //Sound Draw Bow
+        //SoundManager.instance.PlaySFX(17);
+
+        
         animator.SetBool("DrawBow", true);
         playerAimCam.SetActive(true);
         playerFollowCam.SetActive(false);
@@ -185,6 +203,9 @@ public class link_main : MonoBehaviour
     }
     void SwordAttack()
     {
+        //Sound Sword hit
+        SoundManager.instance.PlaySFX(14);
+
         animator.SetTrigger("Sword Attack");
         Collider[] hits = Physics.OverlapSphere(swordAttackPoint.transform.position, swordRange, enemyLayer);
         foreach(Collider enemy in hits)
@@ -200,6 +221,9 @@ public class link_main : MonoBehaviour
     }
     public void TakeDamage(int x)
     {
+        //Sound Hit
+        SoundManager.instance.PlaySFX(5);
+
         if (!shielded & !invincible)
         {
 
@@ -210,6 +234,9 @@ public class link_main : MonoBehaviour
 
     void ShieldUp()
     {
+        SoundManager.instance.PlaySFX(11);
+
+
         if (!autoLowerShield)
         {
             shielded = true;
@@ -225,12 +252,16 @@ public class link_main : MonoBehaviour
 
     void ShieldDown()
     {
+        SoundManager.instance.PlaySFX(11);
+
         shieldTimer = 0f;
         shielded = false;
         animator.SetBool("Shield", false);
     }
     void Die()
     {
+        SoundManager.instance.PlaySFX(3);
+
         animator.SetTrigger("Dead");
         dead = true;
         SetComponentsEnabled(false);
